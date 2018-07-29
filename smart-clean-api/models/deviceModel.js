@@ -16,4 +16,4 @@ const deviceSchema = mongoose.Schema({
     },
 }, {collection: 'smart_clean_devices'});
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Device', deviceSchema);

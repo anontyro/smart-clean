@@ -36,7 +36,7 @@ module.exports.isUserAuthorised = (event, context, callback) => {
     const token = event.authorizationToken;
     
     try{
-        auth.isUserAuthorised(token, resp => callback(null, resp));
+        auth.isUserAuthorised(token, event, resp => callback(null, resp));
   
     }
     catch(ex) {

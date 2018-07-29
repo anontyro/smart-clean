@@ -2,13 +2,13 @@
 
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
-    /** First name of the person to add */
+const locationSchema = mongoose.Schema({
+    /** location id number */
     id: {type: String, required: true},
     /** last name of the preson to add */
     display_name: {type: String, required: true},
     /** List of device ids */
-    devicesId: [{type: String}],
+    deviceId: [{type: String}],
     /** Auto added by the database to record when this record was created */
     created: {
         type: Date,
@@ -16,4 +16,4 @@ const userSchema = mongoose.Schema({
     },
 }, {collection: 'smart_clean_locations'});
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Location', locationSchema);

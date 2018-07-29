@@ -80,21 +80,21 @@ module.exports.register = (event, callback) => {
         })
 }
 
-module.exports.isUserAuthorised = (token, callback) => {
+module.exports.isUserAuthorised = (token, event, callback) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id;
     console.log(decoded);
 
-    userActions.userLookupById(userId)
-        .then(user => {
-            const isAllowed = 'Allow';
-            const authContext = {user: JSON.stringify({ id: user._id, username: user.email, firstname: user.firstname, lastname: user.lastname})};
-            const policy = policyCreation(userId, isAllowed, event.methodArn, authContext);
-            callback(policy);        
-        })
+    userActions.userLookupById(userId, user => {
+        const isAllowed = 'Allow';
+        const authContext = {user: JSON.stringify({ id: user._id, username: user.email, firstname: user.firstname, lastname: user.lastname})};
+        const policy = buildIAMPolicy(userId, isAllowed, event.methodArn, authContext);
+        callback(policy); 
+    })
+
 }
 
-module.exports.buildIAMPolicy = (userId, effect, resource,context) => {
+const buildIAMPolicy = (userId, effect, resource,context) => {
     const policy = {
         principalId: userId,
         policyDocument: {

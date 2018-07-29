@@ -28,6 +28,23 @@ functions:
           method: post
           cors: true
 
+  getUserProjects:
+    handler: services/projects/handler.getProjectsByUserId
+    events:
+      - http:
+          path: projects
+          method: get
+          cors: true
+          authorizer: authorise     
+
+  createUserProject:
+    handler: services/projects/handler.createProject
+    events:
+      - http:
+          path: project
+          method: post
+          cors: true
+          authorizer: authorise    
 
 plugins:
   - serverless-offline
