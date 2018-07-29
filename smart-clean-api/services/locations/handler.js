@@ -48,6 +48,15 @@ module.exports.createLocation = (event, context, callback) => {
 module.exports.updateLocation = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
+    try{
+        locationService.updateLocation(event, response =>{
+            callback(null,response);
+        })
+    } catch (ex) {
+        console.log(ex);
+        callback(null, ex);
+    }
+
 }
 
 module.exports.deleteLocation = (event, context, callback) => {

@@ -94,6 +94,15 @@ functions:
           cors: true
           authorizer: authorise
 
+  updateLocation:
+    handler: services/locations/handler.updateLocation
+    events:
+      - http:
+          path: location
+          method: put
+          cors: true
+          authorizer: authorise
+
 # DEVICE ENDPOINTS
   getDeviceByUser:
     handler: services/devices/handler.getDeviceByUser
@@ -122,6 +131,14 @@ functions:
           cors: true
           authorizer: authorise
 
+  updateDevice:
+    handler: services/devices/handler.updateDevice
+    events:
+      - http:
+          path: device
+          method: put
+          cors: true
+          authorizer: authorise
 
 plugins:
   - serverless-offline

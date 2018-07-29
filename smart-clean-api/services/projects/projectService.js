@@ -51,13 +51,13 @@ module.exports.getCompleteProject = async (projectId) => {
         locations: locArr
     };
     console.log(output);
-    return {
+    return Promise.resolve({
         statusCode: 200,
         body: {
             project: output,
             message: 'project built'
         }
-    };
+    });
 }
 
 module.exports.getProjectsByUserId = (userId, callback) =>{

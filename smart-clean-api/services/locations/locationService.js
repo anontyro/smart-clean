@@ -47,5 +47,25 @@ module.exports.createLocation = (event, callback) => {
                     })
                 })
         })
-
 };
+
+module.exports.updateLocation = (event, callback) => {
+    const location = JSON.parse(event.body);
+
+    if(location.created) {
+        delete location.created;
+    }
+
+    connectToDatabase()
+        .then(() => {
+            ProjectLocation.findByIdAndUpdate(location._id, location)
+                .then(loc => callback({
+                    statusCode: 200,
+                    body: JSON.stringify({
+                        location: loc,
+                        message: 'Successfully updated the location'
+                    })
+                }))
+        })
+
+}

@@ -49,4 +49,20 @@ module.exports.createDevice = (event, callback) => {
                     })
                 }));
         })
+};
+
+module.exports.updateDevice = (event, callback) => {
+    const device = JSON.parse(event.body);
+
+    connectToDatabase()
+        .then(() => {
+            Device.findByIdAndUpdate(device._id, device)
+                .then(dev => callback({
+                    statusCode: 201,
+                    body: JSON.stringify({
+                        device: dev,
+                        message: 'device has been successfully created'     
+                    })
+                }));
+        })
 }

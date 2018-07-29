@@ -41,3 +41,15 @@ module.exports.createDevice = (event, context, callback) => {
     }  
 }
 
+module.exports.updateDevice = (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    try{
+        deviceService.updateDevice(event, response =>{
+            callback(null,response);
+        })
+    } catch (ex) {
+        console.log(ex);
+        callback(null, ex);
+    } 
+}
+
