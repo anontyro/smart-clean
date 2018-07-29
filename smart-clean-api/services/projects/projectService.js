@@ -4,8 +4,18 @@ const connectToDatabase = require('../../connect');
 const Project = require('../../models/projectModel');
 
 
-module.exports.getProjectsByUserId = () =>{
-
+module.exports.getProjectsByUserId = (userId, callback) =>{
+    connectToDatabase()
+        .then(() => {
+            Project.find({userId: userId})
+                .then(projectList => callback({
+                    statusCode: 200,
+                    body: JSON.stringify({
+                        projectList: projectList,
+                        message: 'project list returned'
+                    })
+                }))
+        })
 }
 
 module.exports.createProject = (event, userId ,callback) => {

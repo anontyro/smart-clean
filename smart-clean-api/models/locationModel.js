@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const locationSchema = mongoose.Schema({
     /** location id number */
     id: {type: String, required: true},
+    /**  */
+    userId: [{type: String}],
     /** last name of the preson to add */
     display_name: {type: String, required: true},
     /** List of device ids */

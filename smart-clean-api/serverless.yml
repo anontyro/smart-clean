@@ -46,5 +46,33 @@ functions:
           cors: true
           authorizer: authorise    
 
+  getLocationByUser:
+    handler: services/locations/handler.getLocationByUser
+    events:
+      - http:
+          path: location/user
+          method: get
+          cors: true
+          authorizer: authorise
+
+  getLocationByProject:
+    handler: services/locations/handler.getLocationsByProjectId
+    events:
+      - http:
+          path: location/project/{projectId}
+          method: get
+          cors: true
+          authorizer: authorise
+
+  createLocation:
+    handler: services/locations/handler.createLocation
+    events:
+      - http:
+          path: location
+          method: post
+          cors: true
+          authorizer: authorise
+
+
 plugins:
   - serverless-offline

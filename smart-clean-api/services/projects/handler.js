@@ -4,6 +4,16 @@ const projectService = require('./projectService');
 module.exports.getProjectsByUserId = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
+    try{
+        const userId = JSON.parse(event.requestContext.authorizer.user).id;
+        projectService.getProjectsByUserId(userId, response =>{
+            callback(null,response);
+        })
+    } catch (ex) {
+        console.log(ex);
+        callback(null, ex);
+    }   
+
 }
 
 module.exports.getProject = (event, context, callback) => {
@@ -16,7 +26,6 @@ module.exports.createProject = (event, context, callback) => {
 
     try{
         const userId = JSON.parse(event.requestContext.authorizer.user).id;
-        console.log(userId);
         projectService.createProject(event, userId, response =>{
             callback(null,response);
         })
