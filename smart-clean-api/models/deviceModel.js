@@ -7,6 +7,8 @@ const deviceSchema = mongoose.Schema({
     id : {type: String},
     /** List of location ids this project relates to */
     deviceType: {type: String},
+    /** Array of users this device can belong to */
+    userId: [{type: String}],
     /** Location Id number that this device is attached to */
     locationId: {type: String},
     /** project id name */

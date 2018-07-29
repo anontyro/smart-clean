@@ -19,6 +19,19 @@ module.exports.getProjectsByUserId = (event, context, callback) => {
 module.exports.getProject = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
+    try{
+        const projectId = event.pathParameters.projectId;
+        projectService.getCompleteProject(projectId)
+            .then(p => {
+                console.log('project ready');
+                callback(null, p);
+            });
+
+    } catch (ex) {
+        console.log(ex);
+        callback(null, ex);
+    }  
+
 }
 
 module.exports.createProject = (event, context, callback) => {
@@ -38,6 +51,15 @@ module.exports.createProject = (event, context, callback) => {
 
 module.exports.updateProject = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
+
+    try{
+        projectService.updateProject(event, response =>{
+            callback(null,response);
+        })
+    } catch (ex) {
+        console.log(ex);
+        callback(null, ex);
+    }
 
 }
 
