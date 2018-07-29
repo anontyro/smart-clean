@@ -3,51 +3,52 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const connectToDatabase = require('../../connect');
 const User = require('../../models/userModel');
+const userActions = require('../users/userService');
 
-module.exports.login = (email, password) => {
+module.exports.login = (email, password, callback) => {
     if(!email || !password) {
         throw new Error('username or password not present');
     }
 
-    return connectToDatabase()
+    connectToDatabase()
         .then(() => {
             User.findOne({email: email})
                 .then(user => {
                     if(!user.verified) {
-                        return {
+                        callback({
                             statusCode: 401,
                             body: JSON.stringify({
                                 err: 'User is not verfied',
                                 username: user.email 
                             })
-                        }
+                        });
                     }
                     const validate = bcrypt.compareSync(password, user.password);
                     if(!validate) {
-                        return {
+                        callback({
                             statusCode: 401,
                             body: JSON.stringify({
                                 error: 'username or password is incorrect',
                                 username: user.email
                             })
-                        }
+                        }) 
                     }
                     const token = jwt.sign(
                         {id: user._id, username: user.email},
                         process.env.JWT_SECRET, {expiresIn: 86400});
-                        return {
+                        callback({
                             statusCode: 200,
                             body: JSON.stringify({
                                 auth: true,
                                 token: token,
                                 username: user.email
                             })
-                        }
+                        });
                 })
         })
 };
 
-module.exports.register = (event) => {
+module.exports.register = (event, callback) => {
     const {firstname, lastname, companyName, email, password} = JSON.parse(event.body);
 
     if(!firstname || !lastname || !companyName || !email || !password) {
@@ -56,7 +57,7 @@ module.exports.register = (event) => {
 
     const hashedPass = bcrypt.hashSync(password, 8);
 
-    return connectToDatabase()
+    connectToDatabase()
         .then(() => {
             User.create({
                 firstname: firstname,
@@ -67,17 +68,30 @@ module.exports.register = (event) => {
                 verified: false
             })
             .then(user => {
-                return {
+                callback({
                     statusCode: 201,
                     body: JSON.stringify({
                         auth: true,
                         username: user.email,
                         message: 'User successfully created'
                     })
-                }
+                }) 
             })
         })
+}
 
+module.exports.isUserAuthorised = (token, callback) => {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+    console.log(decoded);
+
+    userActions.userLookupById(userId)
+        .then(user => {
+            const isAllowed = 'Allow';
+            const authContext = {user: JSON.stringify({ id: user._id, username: user.email, firstname: user.firstname, lastname: user.lastname})};
+            const policy = policyCreation(userId, isAllowed, event.methodArn, authContext);
+            callback(policy);        
+        })
 }
 
 module.exports.buildIAMPolicy = (userId, effect, resource,context) => {
