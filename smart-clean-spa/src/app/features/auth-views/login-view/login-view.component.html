@@ -5,7 +5,10 @@
     </div>
     <div class="progress-bar" *ngIf="isLoading">
         <div class="loaded"></div>
-     </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="loginError" role="alert">
+      {{loginError}}  
+    </div>
     <div class="form-container">
       <form #lForm="ngForm" (ngSubmit)="onSubmit(lForm)" novalidate>
         <div class="form-group">
