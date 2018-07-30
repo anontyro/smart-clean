@@ -1,5 +1,6 @@
 export const GlobalVars = {
     apiUri : ' https://os034igan7.execute-api.ap-southeast-1.amazonaws.com/production/',
+    tokenStorage: 'smartCleanUser',
     auth: {
         login: 'login',
         register: 'register',

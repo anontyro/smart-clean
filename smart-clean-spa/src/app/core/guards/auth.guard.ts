@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { GlobalVars } from '../../../data/globalVars';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-      if (localStorage.getItem('smartCleanUser')) {
+      if (localStorage.getItem(GlobalVars.tokenStorage)) {
         return true;
       }
       this.router.navigate(['/auth/login'], {queryParams: {returnUrl: state.url}});

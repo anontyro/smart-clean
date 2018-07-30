@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+.invalid-feedback {
+    display: inline;
+}
+.progress-bar {
+    height: 2px;
+    width: 100%;
+    background: lightgray;
+  }
+  
+  .loaded {
+    height: 100%;
+    width: 100%;
+    background: #444;
+    animation: 3s linear infinite loading;
+    transform-origin: 0%;
+  }
+  
+  @keyframes loading {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(100%);
+    }
+  }

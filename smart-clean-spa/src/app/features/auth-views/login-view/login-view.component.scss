@@ -1,0 +1,18 @@
+.main-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+.login-form-container{
+    width: 30%;
+    height: 500px;
+    .form-header{
+        margin-bottom: 20px;
+    }
+    .form-container{
+       .form-check{
+           margin-bottom: 20px;
+       } 
+    }
+}
