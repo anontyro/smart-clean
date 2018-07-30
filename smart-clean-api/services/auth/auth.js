@@ -20,7 +20,10 @@ module.exports.login = (email, password, callback) => {
                             body: JSON.stringify({
                                 err: 'User is not verfied',
                                 username: user.email 
-                            })
+                            }),
+                            headers: {
+                                "Access-Control-Allow-Origin": "*" 
+                            }
                         });
                     }
                     const validate = bcrypt.compareSync(password, user.password);
@@ -30,7 +33,10 @@ module.exports.login = (email, password, callback) => {
                             body: JSON.stringify({
                                 error: 'username or password is incorrect',
                                 username: user.email
-                            })
+                            }),
+                            headers: {
+                                "Access-Control-Allow-Origin": "*" 
+                            }
                         }) 
                     }
                     const token = jwt.sign(
@@ -42,7 +48,10 @@ module.exports.login = (email, password, callback) => {
                                 auth: true,
                                 token: token,
                                 username: user.email
-                            })
+                            }),
+                            headers: {
+                                "Access-Control-Allow-Origin": "*" 
+                            }
                         });
                 })
         })
@@ -74,7 +83,10 @@ module.exports.register = (event, callback) => {
                         auth: true,
                         username: user.email,
                         message: 'User successfully created'
-                    })
+                    }),
+                    headers: {
+                        "Access-Control-Allow-Origin": "*" 
+                    }
                 }) 
             })
         })
