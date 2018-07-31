@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { LoginViewComponent } from './login-view/login-view.component';
 import { SharedModule } from '../../shared/shared.module';
 import { RouterModule } from '../../../../node_modules/@angular/router';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { RouterModule } from '../../../../node_modules/@angular/router';
     SharedModule,
     CoreModule,
     LayoutsModule,
-    RouterModule.forChild(AuthRoutes)
+    RouterModule.forChild(AuthRoutes),
+    MatFormFieldModule
   ],
   declarations: [LoginViewComponent],
   exports: [
