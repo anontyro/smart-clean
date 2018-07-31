@@ -4,17 +4,18 @@
     height: 80vh;
     .project-container{
         height: 70%;
-        overflow-y: auto;
     }
     .bottom-section {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
+        height: 30%;
         .location-container{
-            width: 50%;
+            width: 40%;
             margin: 0px 20px;
         }
         .device-container{
-            width: 50%;
+            width: 40%;
         }
     }
 }

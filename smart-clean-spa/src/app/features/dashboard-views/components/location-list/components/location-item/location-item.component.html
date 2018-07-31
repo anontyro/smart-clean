@@ -1,3 +1,8 @@
-<p>
-  location-item works!
-</p>
+<div class="location" *ngIf="location">
+    <div class="display-name">
+      {{location.display_name}}
+    </div>
+    <div class="device-number">
+      Devices: {{location.deviceId.length}}
+    </div>
+  </div>

@@ -3,7 +3,7 @@
     <h3 class="inline-header">Project List</h3>
     <span class="inline-link-header">New</span>
   </div>
-  <div class="main-list" *ngFor="let project of projectList">
-    <app-project-item [project]="project"></app-project-item>
+  <div class="main-list" >
+    <app-project-item *ngFor="let project of projectList" [project]="project"></app-project-item>
   </div>
 </div>

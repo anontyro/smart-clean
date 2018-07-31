@@ -1,3 +1,8 @@
-<p>
-  device-item works!
-</p>
+<div class="device" *ngIf="device">
+    <div class="display-name">
+      {{device.display_name}}
+    </div>
+    <div class="device-number">
+      {{device.deviceType}}
+    </div>
+  </div>

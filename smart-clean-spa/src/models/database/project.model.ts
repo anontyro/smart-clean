@@ -1,6 +1,7 @@
 import { LocationCompleteModel } from './location.model';
 
 export class BaseProject {
+    public _id: string;
     public pid: string;
     public display_name: string;
     public created: Date;
