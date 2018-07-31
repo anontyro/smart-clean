@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { LocationModel } from '../../../../../models/database/location.model';
 
 @Component({
   selector: 'app-location-list',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./location-list.component.scss']
 })
 export class LocationListComponent implements OnInit {
+
+  @Input()
+  public locationList: Array<LocationModel> = [];
 
   constructor() { }
 

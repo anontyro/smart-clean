@@ -1,0 +1,12 @@
+.project-item-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f2f8f7;
+    border: 1px solid #cef9f2;
+    margin: 10px 0px;
+    cursor: pointer;
+}
+.project-item-container:hover{
+    box-shadow: 5px 4px 20px black;
+}

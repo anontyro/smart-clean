@@ -10,6 +10,8 @@ import { ProjectListComponent } from './components/project-list/project-list.com
 import { ProjectItemComponent } from './components/project-list/component/project-item/project-item.component';
 import { LocationListComponent } from './components/location-list/location-list.component';
 import { DeviceListComponent } from './components/device-list/device-list.component';
+import { DeviceItemComponent } from './components/device-list/components/device-item/device-item.component';
+import { LocationItemComponent } from './components/location-list/components/location-item/location-item.component';
 
 @NgModule({
   imports: [
@@ -19,9 +21,20 @@ import { DeviceListComponent } from './components/device-list/device-list.compon
     LayoutsModule,
     RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [DashboardLandingComponent, ProjectListComponent, ProjectItemComponent, LocationListComponent, DeviceListComponent],
+  declarations: [
+    DashboardLandingComponent,
+    ProjectListComponent,
+    ProjectItemComponent,
+    LocationListComponent,
+    DeviceListComponent,
+    DeviceItemComponent,
+    LocationItemComponent],
   exports: [
-    DashboardLandingComponent
+    DashboardLandingComponent,
+    ProjectListComponent,
+    ProjectItemComponent,
+    LocationListComponent,
+    DeviceListComponent
   ]
 })
 export class DashboardViewsModule { }

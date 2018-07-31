@@ -1,7 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .invalid-feedback {
     display: inline;
 }
+html body{
+  height: 100%;
+}
+
+h3.inline-header{
+
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 10px;
+  border-bottom: 1px solid black;
+}
+
+nav.navbar.navbar-dark.bg-dark.mb-5 {
+  margin-bottom: 20px !important;
+}
+
+.inline-link-header {
+  line-height: 2.2;
+  font-size: 1.2em;
+  color: gray;
+  cursor: pointer;
+}
+
+.inline-link-header:hover{
+  color:  #095a4c;
+}
+
 .progress-bar {
     height: 2px;
     width: 100%;

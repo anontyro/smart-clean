@@ -1,0 +1,20 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    .project-container{
+        height: 70%;
+        overflow-y: auto;
+    }
+    .bottom-section {
+        display: flex;
+        justify-content: space-between;
+        .location-container{
+            width: 50%;
+            margin: 0px 20px;
+        }
+        .device-container{
+            width: 50%;
+        }
+    }
+}

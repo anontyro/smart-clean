@@ -1,3 +1,9 @@
-<p>
-  location-list works!
-</p>
+<div class="location-inner-container">
+    <div class="project-header">
+      <h3 class="inline-header">Location List</h3>
+      <span class="inline-link-header">New</span>
+    </div>
+    <div class="location-list" *ngFor="let location of locationList">
+      <app-location-item [location]="location"></app-location-item>
+    </div>
+</div>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { DeviceModel } from '../../../../../models/database/device.model';
 
 @Component({
   selector: 'app-device-list',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./device-list.component.scss']
 })
 export class DeviceListComponent implements OnInit {
+
+  @Input()
+  public deviceList: Array<DeviceModel> = [];
 
   constructor() { }
 

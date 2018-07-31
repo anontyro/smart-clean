@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ProjectModel } from './../../../../../../../models/database/project.model';
+import { Component, OnInit, Input } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-project-item',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectItemComponent implements OnInit {
 
+  @Input()
+  public project: ProjectModel;
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  public displayDate() {
+    if (!this.project || !this.project.created) {
+      return ;
+    }
+    return moment(this.project.created).format('DD-MM-YYYY');
   }
 
 }

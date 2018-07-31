@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ProjectModel } from '../../../../../models/database/project.model';
 
 @Component({
   selector: 'app-project-list',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit {
+
+  @Input()
+  public projectList: Array<ProjectModel> = [];
 
   constructor() { }
 
