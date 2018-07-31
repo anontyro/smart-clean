@@ -6,6 +6,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardLandingComponent } from './dashboard-landing/dashboard-landing.component';
 import { RouterModule } from '@angular/router';
+import { ProjectListComponent } from './components/project-list/project-list.component';
+import { ProjectItemComponent } from './components/project-list/component/project-item/project-item.component';
+import { LocationListComponent } from './components/location-list/location-list.component';
+import { DeviceListComponent } from './components/device-list/device-list.component';
 
 @NgModule({
   imports: [
@@ -15,7 +19,7 @@ import { RouterModule } from '@angular/router';
     LayoutsModule,
     RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [DashboardLandingComponent],
+  declarations: [DashboardLandingComponent, ProjectListComponent, ProjectItemComponent, LocationListComponent, DeviceListComponent],
   exports: [
     DashboardLandingComponent
   ]
