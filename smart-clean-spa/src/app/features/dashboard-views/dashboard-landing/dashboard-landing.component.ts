@@ -11,11 +11,15 @@ export class DashboardLandingComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private apiHanlderService: ApiHandlerService
+    private apiHandlerService: ApiHandlerService
   ) { }
 
   ngOnInit() {
-    this.apiHanlderService.getProjectList().subscribe(response =>{
+
+  }
+
+  private buildLists() {
+    this.apiHandlerService.getProjectList().subscribe(response => {
       console.log(response);
     });
   }

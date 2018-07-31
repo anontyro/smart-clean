@@ -18,7 +18,6 @@ export class ApiHandlerService {
   constructor(private http: HttpClient, private authService: AuthService) { this.onInIt(); }
 
   private onInIt() {
-    // this.getProjectList().subscribe(results => console.log(results));
   }
 
   public getProjectList(forceRefresh?: boolean) {
@@ -33,46 +32,61 @@ export class ApiHandlerService {
   public getLocationList(forceRefresh?: boolean) {
     const url = this.apiUri + GlobalVars.location.get.locationListByUser;
 
+    if (!this.cachedLocationList.observers.length || forceRefresh) {
+      this.createGetRequest(url).subscribe(results => this.cachedLocationList.next(results));
+    }
+    return this.cachedLocationList;
   }
 
   public getDeviceList(forceRefresh?: boolean) {
     const url = this.apiUri + GlobalVars.device.get.deviceListByUser;
 
+    if (!this.cachedDeviceList.observers.length || forceRefresh) {
+      this.createGetRequest(url).subscribe(results => this.cachedDeviceList.next(results));
+    }
+    return this.cachedDeviceList;
   }
 
   public getProjectDetail(projectId: string) {
-    const url = this.apiUri + GlobalVars.project.get.completeProject;
+    const url = this.apiUri + GlobalVars.project.get.completeProject + '/' + projectId;
 
+    return this.createGetRequest(url);
   }
 
-  public postNewProject() {
+  public postNewProject(project) {
     const url = this.apiUri + GlobalVars.project.post.createProject;
 
+    return this.createPostRequest(url, project);
   }
 
-  public postNewLocation() {
+  public postNewLocation(location) {
     const url = this.apiUri + GlobalVars.location.post.createLocation;
 
+    return this.createPostRequest(url, location);
   }
 
-  public postNewDeviceList() {
+  public postNewDeviceList(device) {
     const url = this.apiUri + GlobalVars.device.post.createDevice;
 
+    return this.createPostRequest(url, device);
   }
 
-  public putProjectUpdate() {
+  public putProjectUpdate(project) {
     const url = this.apiUri + GlobalVars.project.put.updateProject;
 
+    return this.createPutRequest(url, project);
   }
 
-  public putLocationUpdate() {
+  public putLocationUpdate(location) {
     const url = this.apiUri + GlobalVars.location.put.updateLocation;
 
+    return this.createPutRequest(url, location);
   }
 
-  public putDeviceUpdate() {
+  public putDeviceUpdate(device) {
     const url = this.apiUri + GlobalVars.device.put.updateDevice;
 
+    return this.createPutRequest(url, location);
   }
 
 
@@ -85,7 +99,7 @@ export class ApiHandlerService {
     return this.http.post(url, body, this.authService.getAuthHeader());
   }
 
-  private putRequest(url: string, body: any): Observable<any> {
+  private createPutRequest(url: string, body: any): Observable<any> {
     return this.http.put(url, body, this.authService.getAuthHeader());
   }
 
