@@ -1,3 +1,4 @@
+import { ApiHandlerService } from './../../../core/services/api/api-handler.service';
 import { AuthService } from './../../../core/services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardLandingComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private apiHanlderService: ApiHandlerService
+  ) { }
 
   ngOnInit() {
+    this.apiHanlderService.getProjectList().subscribe(response =>{
+      console.log(response);
+    });
   }
 
 }
