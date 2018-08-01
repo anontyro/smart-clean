@@ -12,7 +12,7 @@ import { LocationModel } from '../../../../models/database/location.model';
 import { MockDevice1, MockDevice2 } from '../../../../testing/mocks/device.mocks';
 import { DeviceModel } from '../../../../models/database/device.model';
 
-fdescribe('ApiHandlerService', () => {
+describe('ApiHandlerService', () => {
   let injector: TestBed;
   let service: ApiHandlerService;
   let httpMock: HttpTestingController;
@@ -150,15 +150,51 @@ fdescribe('ApiHandlerService', () => {
   });
 
   it('should update an existing project object', () => {
+    const url = GlobalVars.apiUri + GlobalVars.project.put.updateProject;
+    const mockProject = MockProject2;
+    const mockResp = {project: mockProject, message: 'Successfully Updated a project'};
 
+    service.putProjectUpdate(mockProject).subscribe(response => {
+      expect(response.project).toBe(mockProject);
+      expect(response.message).toBeTruthy();
+    });
+
+    const req = httpMock.expectOne(url);
+    expect(req.request.method).toBe('PUT');
+    expect(req.request.body).toBeTruthy();
+    req.flush(mockResp);
   });
 
   it('should update an existing location object', () => {
+    const url = GlobalVars.apiUri + GlobalVars.location.put.updateLocation;
+    const mockLocation = MockLocation1;
+    const mockResp = {location: mockLocation, message: 'Successfully updated location'};
 
+    service.putLocationUpdate(mockLocation).subscribe(response => {
+      expect(response.location).toBe(mockLocation);
+      expect(response.message).toBeTruthy();
+    });
+
+    const req = httpMock.expectOne(url);
+    expect(req.request.method).toBe('PUT');
+    expect(req.request.body).toBeTruthy();
+    req.flush(mockResp);
   });
 
   it('should update an existing device object', () => {
+    const url = GlobalVars.apiUri + GlobalVars.device.put.updateDevice;
+    const mockDevice = MockDevice1;
+    const mockResp = {device: mockDevice, message: 'Successfully updated device'};
 
+    service.putDeviceUpdate(mockDevice).subscribe(response => {
+      console.log(response);
+      expect(response).toBeTruthy();
+      expect(response.message).toBeTruthy();
+    });
+
+    const req = httpMock.expectOne(url);
+    expect(req.request.method).toBe('PUT');
+    req.flush(mockResp);
   });
 
 });

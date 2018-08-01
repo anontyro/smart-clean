@@ -1,6 +1,9 @@
+import { MockProject1, MockProject2 } from './../../../../../testing/mocks/project.mocks';
+import { ProjectItemComponent } from './component/project-item/project-item.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectListComponent } from './project-list.component';
+import { RouterTestingModule } from '../../../../../../node_modules/@angular/router/testing';
 
 describe('ProjectListComponent', () => {
   let component: ProjectListComponent;
@@ -8,7 +11,8 @@ describe('ProjectListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectListComponent ]
+      declarations: [ ProjectListComponent, ProjectItemComponent ],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   }));
@@ -16,6 +20,7 @@ describe('ProjectListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProjectListComponent);
     component = fixture.componentInstance;
+    component.projectList = [MockProject1, MockProject2];
     fixture.detectChanges();
   });
 

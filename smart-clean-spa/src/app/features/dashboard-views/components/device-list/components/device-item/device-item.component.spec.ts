@@ -1,3 +1,4 @@
+import { MockDevice1 } from './../../../../../../../testing/mocks/device.mocks';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeviceItemComponent } from './device-item.component';
@@ -16,6 +17,7 @@ describe('DeviceItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DeviceItemComponent);
     component = fixture.componentInstance;
+    component.device = MockDevice1;
     fixture.detectChanges();
   });
 

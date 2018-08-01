@@ -20,7 +20,6 @@ export class DashboardLandingComponent implements OnInit, OnDestroy {
   private keepAlive = true;
 
   constructor(
-    private authService: AuthService,
     private apiHandlerService: ApiHandlerService
   ) { }
 

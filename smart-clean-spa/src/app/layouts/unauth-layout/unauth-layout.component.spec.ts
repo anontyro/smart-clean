@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UnauthLayoutComponent } from './unauth-layout.component';
+import { RouterTestingModule } from '../../../../node_modules/@angular/router/testing';
 
 describe('UnauthLayoutComponent', () => {
   let component: UnauthLayoutComponent;
@@ -8,7 +9,10 @@ describe('UnauthLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UnauthLayoutComponent ]
+      declarations: [ UnauthLayoutComponent ],
+      imports: [
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));
