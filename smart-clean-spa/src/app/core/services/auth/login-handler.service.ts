@@ -7,6 +7,12 @@ import { LoginModel } from '../../../../models/auth/login.model';
 import { TokenModel } from '../../../../models/auth/token.model';
 import { Router } from '@angular/router';
 
+/**
+ * @class Login Handler Service
+ * This service is used exclusively when the user is not authenticated
+ * once authenticated they should be using the auth service
+ * contains all the requests and logic on how to log a user in
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -14,13 +20,20 @@ export class LoginHandlerService {
 
   private loginUri = GlobalVars.apiUri + GlobalVars.auth.login;
   private tokenStorage = GlobalVars.tokenStorage;
-
+  /** On error emit the error to be handled on the frontend to provide user feedback */
   public loginErrorEmitter: EventEmitter<any> = new EventEmitter();
-
+  /** error message store */
   public ErrorMessage = '';
-
+  /** standard constructor taking two dependancies for http and routing */
   constructor(private http: HttpClient, private router: Router) {}
 
+  /**
+   * Core Login method used to log the user in
+   * Requires a user object to be re-encoded and sent to the server
+   * if successful will set the token and redirect to the users return url
+   * @param user complete User object
+   * @param returnUrl return url string for successful login
+   */
   public getNewToken(user: LoginModel, returnUrl: string) {
 
     const item = { email: user.username, password: user.password};
@@ -34,16 +47,19 @@ export class LoginHandlerService {
     }, err => this.loginError('Unable to contact server'));
 
   }
-
+  /** On Logout remove token from storage */
   public logout() {
     localStorage.removeItem(this.tokenStorage);
   }
-
+  // helper method used to set the token and redirect the user
   private loginSuccessful(token: TokenModel, returnUrl: string) {
     localStorage.setItem(this.tokenStorage, JSON.stringify(token));
     this.router.navigate([returnUrl]);
   }
-
+  /**
+   * On login error emit the message to be displayed to the user
+   * @param message String error message
+   */
   public loginError(message) {
     this.loginErrorEmitter.emit(message);
     this.ErrorMessage = message;
@@ -61,11 +77,11 @@ export class LoginHandlerService {
       form.controls[i].markAsTouched();
     }
   }
-
+  // make a get request with no security
   private createGetRequest(url: string): Observable<any> {
     return this.http.get<Array<any>>(url);
   }
-
+  // make a post request no security so only for login requests
   public createPostRequest(url: string, body: any): Observable<any> {
     return this.http.post(url, body);
   }
