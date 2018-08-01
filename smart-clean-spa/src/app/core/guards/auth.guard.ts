@@ -3,6 +3,12 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable } from 'rxjs';
 import { GlobalVars } from '../../../data/globalVars';
 
+/**
+ * @class AuthGuard
+ * Guard class that provides basic authentication for the pages
+ * requires a JWT in the browser store to allow the user to access
+ * the pages
+ */
 @Injectable({
   providedIn: 'root'
 })

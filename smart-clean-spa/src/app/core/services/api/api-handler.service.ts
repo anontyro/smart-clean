@@ -111,18 +111,30 @@ export class ApiHandlerService {
     return this.createPostRequest(url, device);
   }
 
+  /**
+   * Update method for the project object to update this table in the database
+   * @param project base project object
+   */
   public putProjectUpdate(project) {
     const url = this.apiUri + GlobalVars.project.put.updateProject;
 
     return this.createPutRequest(url, project);
   }
 
+  /**
+   * Update method for the project object to update this table in hte database
+   * @param location base location object
+   */
   public putLocationUpdate(location) {
     const url = this.apiUri + GlobalVars.location.put.updateLocation;
 
     return this.createPutRequest(url, location);
   }
 
+  /**
+   * Update method for the device to update this item in the table
+   * @param device base device object
+   */
   public putDeviceUpdate(device) {
     const url = this.apiUri + GlobalVars.device.put.updateDevice;
 
@@ -130,6 +142,7 @@ export class ApiHandlerService {
   }
 
 
+  // PRIVATE METHODS ---------------------------------------------------------
 
   private createGetRequest(url: string): Observable<any> {
     return this.http.get<Array<any>>(url, this.authService.getAuthHeader());
