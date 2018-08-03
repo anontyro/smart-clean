@@ -1,3 +1,8 @@
+/**
+ * @class Connect
+ * This is the MongoDB connection class that returns a promise to be used to access the database
+ * as required
+ */
 const mongoose = require('mongoose');
 require('dotenv').config();
 

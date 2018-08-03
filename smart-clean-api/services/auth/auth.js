@@ -1,3 +1,8 @@
+/**
+ * @class Authentication Service
+ * Contains the main logic to be used in the authentication of the API
+ */
+
 'use strict'
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -7,6 +12,13 @@ const userActions = require('../users/userService');
 
 const standardResponse = require('../utils/apiUtils').standardResponse;
 
+/**
+ * Main login method that requires an email and password will return a callback
+ * containing the relevent response either 200 or 401
+ * @param {*} email string user email used to sign up with
+ * @param {*} password string user password which is verified against the bcrypt database hash
+ * @param {*} callback response already mapped to the aws lambda state
+ */
 module.exports.login = (email, password, callback) => {
     if(!email || !password) {
         throw new Error('username or password not present');
@@ -47,6 +59,15 @@ module.exports.login = (email, password, callback) => {
         })
 };
 
+/**
+ * Register a new user
+ * takes the httpEvent and pulls the body checking it has all the
+ * fields required
+ * then it will hash the password and setup the unverified version
+ * of the user in the database
+ * @param {*} event httpEvent from server
+ * @param {*} callback aws lambda callback encoded
+ */
 module.exports.register = (event, callback) => {
     const {firstname, lastname, companyName, email, password} = JSON.parse(event.body);
 
@@ -76,6 +97,16 @@ module.exports.register = (event, callback) => {
         })
 }
 
+/**
+ * Authorisation method
+ * This method is used to check that the JWT token is valid
+ * and the user is able to access the resource
+ * currently basic implementation, can be expanded upon
+ * to have extra policies as required
+ * @param {*} token 
+ * @param {*} event 
+ * @param {*} callback 
+ */
 module.exports.isUserAuthorised = (token, event, callback) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id;
@@ -90,6 +121,7 @@ module.exports.isUserAuthorised = (token, event, callback) => {
 
 }
 
+// Method that is used to setup the AWS policy management section to be sent
 const buildIAMPolicy = (userId, effect, resource,context) => {
     const policy = {
         principalId: userId,
