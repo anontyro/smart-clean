@@ -5,4 +5,7 @@
     <div class="device-number">
       Devices: {{location.deviceId.length}}
     </div>
+    <div class="update" [routerLink]="['/location/update/'+location._id]" >
+      Update
+    </div>
   </div>

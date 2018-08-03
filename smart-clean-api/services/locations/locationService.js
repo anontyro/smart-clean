@@ -96,12 +96,20 @@ module.exports.updateLocation = (event, callback) => {
     connectToDatabase()
         .then(() => {
             ProjectLocation.findByIdAndUpdate(location._id, location)
-                .then(loc => callback(standardResponse(200,
+                .then(loc => {
+                    if (loc.deviceId.length > 0) {
+                        loc.deviceId.forEach(dev => {
+                            attachDevice(loc._id, dev)
+                                .then(next => next);
+                        });
+                    }
+                    callback(standardResponse(200,
                     {                        
                         location: loc,
                         message: 'Successfully updated the location'
                     }
-                )))
+                ))
+            })
         })
 
 }
