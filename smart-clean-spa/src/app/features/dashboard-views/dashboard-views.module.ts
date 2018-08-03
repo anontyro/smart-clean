@@ -16,6 +16,9 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { DeviceFormComponent } from './components/device-form/device-form.component';
 import { LocationFormComponent } from './components/location-form/location-form.component';
 import { ProjectFormComponent } from './components/project-form/project-form.component';
+import { CreateProjectComponent } from './create-project/create-project.component';
+import { CreateDeviceComponent } from './create-device/create-device.component';
+import { CreateLocationComponent } from './create-location/create-location.component';
 
 @NgModule({
   imports: [
@@ -36,7 +39,10 @@ import { ProjectFormComponent } from './components/project-form/project-form.com
     ProjectDetailsComponent,
     DeviceFormComponent,
     LocationFormComponent,
-    ProjectFormComponent],
+    ProjectFormComponent,
+    CreateProjectComponent,
+    CreateDeviceComponent,
+    CreateLocationComponent],
   exports: [
     DashboardLandingComponent,
     ProjectListComponent,

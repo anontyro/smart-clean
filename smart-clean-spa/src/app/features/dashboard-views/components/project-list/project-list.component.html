@@ -1,7 +1,7 @@
 <div class="project-list-main">
   <div class="project-header">
     <h3 class="inline-header">Project List</h3>
-    <span class="inline-link-header">New</span>
+    <span class="inline-link-header" routerLink='/project/create'>New</span>
   </div>
   <div class="main-list" >
     <app-project-item *ngFor="let project of projectList" [project]="project"></app-project-item>

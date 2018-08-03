@@ -1,7 +1,7 @@
 <div class="device-inner-container">
     <div class="project-header">
       <h3 class="inline-header">Device List</h3>
-      <span class="inline-link-header">New</span>
+      <span class="inline-link-header" routerLink='/device/create'>New</span>
     </div>
     <div class="device-list"> 
       <app-device-item *ngFor="let device of deviceList" [device]="device"></app-device-item>

@@ -1,7 +1,7 @@
 <div class="location-inner-container">
     <div class="project-header">
       <h3 class="inline-header">Location List</h3>
-      <span class="inline-link-header">New</span>
+      <span class="inline-link-header" routerLink='/location/create'>New</span>
     </div>
     <div class="location-list">
       <app-location-item *ngFor="let location of locationList" [location]="location"></app-location-item>
