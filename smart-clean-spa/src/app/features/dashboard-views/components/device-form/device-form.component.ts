@@ -45,7 +45,32 @@ export class DeviceFormComponent implements OnInit {
       return this.loginService.setFormFieldErrors(form);
     }
     this.isLoading = true;
-    this.createDevice();
+    if (this.device._id) {
+      this.updateDevice();
+    } else {
+      this.createDevice();
+    }
+  }
+
+  public detach() {
+    this.apiService.detachDevice(this.device)
+      .subscribe(response => {
+        console.log(response);
+        this.onSuccess();
+      }, err => {
+        this.isLoading = false;
+        console.error(err);
+      });
+  }
+
+  private updateDevice() {
+    this.apiService.putDeviceUpdate(this.device)
+      .subscribe(response => {
+        this.apiService.getDeviceList(true).subscribe(this.onSuccess());
+      }, err => {
+        this.isLoading = false;
+        console.error(err);
+      });
   }
 
   private createDevice() {

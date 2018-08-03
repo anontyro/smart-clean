@@ -12,6 +12,8 @@ export const DashboardRoutes: Routes = [
         {path: 'project/create', component: CreateProjectComponent, pathMatch: 'full'},
         {path: 'location/create', component: CreateLocationComponent, pathMatch: 'full'},
         {path: 'device/create', component: CreateDeviceComponent, pathMatch: 'full'},
+        {path: 'location/update/:id', component: CreateLocationComponent, pathMatch: 'full'},
+        {path: 'device/update/:id', component: CreateDeviceComponent, pathMatch: 'full'},
         {path: 'project/:id', component: ProjectDetailsComponent, pathMatch: 'full'},
 
     ]}

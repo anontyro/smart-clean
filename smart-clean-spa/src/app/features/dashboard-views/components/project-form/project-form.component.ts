@@ -24,6 +24,7 @@ export class ProjectFormComponent implements OnInit {
 
   public isLoading = false;
 
+
   constructor(
     private loginService: LoginHandlerService,
     private apiService: ApiHandlerService,
@@ -75,7 +76,21 @@ export class ProjectFormComponent implements OnInit {
     }
     this.isLoading = true;
     console.log(this.project);
-    this.pushProject();
+    if (this.project._id) {
+      this.updateProject();
+    } else {
+      this.pushProject();
+    }
+  }
+
+  private updateProject() {
+    this.apiService.putProjectUpdate(this.project)
+      .subscribe(response => {
+        this.apiService.getProjectList(true).subscribe(this.onSuccess());
+      }, err => {
+        console.error(err);
+        this.isLoading = false;
+      });
   }
 
   private pushProject() {

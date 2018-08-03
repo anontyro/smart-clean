@@ -18,6 +18,9 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="form-row">
       <div class="form-group">
         <input type="text" class="form-control" name="devId" [(ngModel)]="device.id"  
         placeholder="Device identifier" #devId="ngModel" required>
@@ -25,11 +28,19 @@
           <p *ngIf="devId.errors.required">A device identifier is required</p>
         </div>
       </div>
+
+      <div class="input-group" *ngIf="device.locationId">
+        <input type="text" class="form-control" name="devLoc" [(ngModel)]="device.locationId"  
+        placeholder="Location Id" #devLoc="ngModel" disabled >
+        <div class="input-group-append">
+          <button  class="btn btn-outline-secondary" type="add-btn" (click)="detach()" >Detach</button>
+        </div>
+      </div>
     </div>
 
     
 
 
-    <button type="submit" name="submit-form" class="btn btn-dark btn-lg btn-block" (click)="onSubmit(dForm)">Submit</button>
+    <button type="submit" name="submit-form" class="sub-btn btn btn-dark btn-lg btn-block" (click)="onSubmit(dForm)">Submit</button>
   </form>
 </div>

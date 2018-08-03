@@ -43,6 +43,9 @@ export const GlobalVars = {
         },
         put: {
             updateDevice: 'device'
+        },
+        patch: {
+            detachDevice: 'device/detach'
         }
     }
 };

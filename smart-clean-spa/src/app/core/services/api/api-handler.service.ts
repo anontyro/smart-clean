@@ -141,6 +141,12 @@ export class ApiHandlerService {
     return this.createPutRequest(url, location);
   }
 
+  public detachDevice(device) {
+    const url = this.apiUri + GlobalVars.device.patch.detachDevice;
+
+    return this.createPatchRequest(url, device);
+  }
+
 
   // PRIVATE METHODS ---------------------------------------------------------
 
@@ -154,6 +160,10 @@ export class ApiHandlerService {
 
   private createPutRequest(url: string, body: any): Observable<any> {
     return this.http.put(url, body, this.authService.getAuthHeader());
+  }
+
+  private createPatchRequest(url: string, body: any): Observable<any> {
+    return this.http.patch(url, body, this.authService.getAuthHeader());
   }
 
 }

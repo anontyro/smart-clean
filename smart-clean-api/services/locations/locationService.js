@@ -7,6 +7,7 @@
 const connectToDatabase = require('../../connect');
 const ProjectLocation = require('../../models/locationModel');
 const standardResponse = require('../utils/apiUtils').standardResponse;
+const Device = require('../../models/deviceModel');
 
 /** No in use */
 module.exports.getLocationsByProjectId = () => {
@@ -40,6 +41,14 @@ module.exports.getLocationByUserId = (event, callback) => {
         })
 };
 
+const attachDevice = (locationId, deviceId) => {
+    return connectToDatabase()
+        .then(() => {
+            return Device.findByIdAndUpdate(deviceId, {locationId: locationId})
+                .then(response => response);
+        })
+}
+
 /**
  * Create a new location
  * Add a new location to the location table
@@ -55,6 +64,12 @@ module.exports.createLocation = (event, callback) => {
         .then(() => {
             ProjectLocation.create(location)
                 .then(loc => {
+                    if (loc.deviceId.length > 0) {
+                        loc.deviceId.forEach(dev => {
+                            attachDevice(loc._id, dev)
+                                .then(next => next);
+                        });
+                    }
                     callback(standardResponse(201,
                         {
                             location: loc,

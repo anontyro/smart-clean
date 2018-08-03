@@ -83,3 +83,15 @@ module.exports.updateDevice = (event, context, callback) => {
     } 
 }
 
+module.exports.detachDevice = (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    try{
+        deviceService.detachDevice(event, response =>{
+            callback(null,response);
+        })
+    } catch (ex) {
+        console.log(ex);
+        callback(null, ex);
+    } 
+}
+

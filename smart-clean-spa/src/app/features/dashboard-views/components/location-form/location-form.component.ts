@@ -88,7 +88,22 @@ export class LocationFormComponent implements OnInit {
       return this.loginService.setFormFieldErrors(form);
     }
     this.isLoading = true;
-    this.pushLocation();
+
+    if (this.location._id) {
+      this.updateLocation();
+    } else {
+      this.pushLocation();
+    }
+  }
+
+  private updateLocation() {
+    this.apiService.putLocationUpdate(this.location)
+      .subscribe(response => {
+        this.apiService.getLocationList(true).subscribe(this.onSuccess());
+      }, err => {
+        this.isLoading = false;
+        console.error(err);
+      });
   }
 
   private pushLocation() {

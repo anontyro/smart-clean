@@ -140,5 +140,14 @@ functions:
           cors: true
           authorizer: authorise
 
+  detachDevice:
+    handler: services/devices/handler.detachDevice
+    events:
+      - http:
+          path: device/detach
+          method: patch
+          core: true
+          authorizer: authorise
+
 plugins:
   - serverless-offline

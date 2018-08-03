@@ -8,6 +8,7 @@
 const connectToDatabase = require('../../connect');
 const Device = require('../../models/deviceModel');
 const standardResponse = require('../utils/apiUtils').standardResponse;
+const ProjectLocation = require('../../models/locationModel');
 
 /**
  * Device By Location
@@ -89,4 +90,51 @@ module.exports.updateDevice = (event, callback) => {
                         message: 'device has been successfully created'
                     })))
         })
+}
+
+const detachLocation = (locationId, deviceId) => {
+    return ProjectLocation.findById(locationId)
+        .then(loc => {
+            console.log(locationId);
+            for(let i = 0; i < loc.deviceId.length; i++) {
+                console.log(loc[i]);
+                if(loc[i].deviceId === deviceId) {
+                    loc.deviceId.splice(i, 1);
+                    return ProjectLocation.update(loc)
+                        .then(result => result)
+                }
+            }
+        })
+}
+
+module.exports.detachDevice = (event, callback) => {
+    const device = JSON.parse(event.body);
+    connectToDatabase()
+        .then(() => {
+            ProjectLocation.findById(device.locationId)
+            .then(loc => {
+                console.log(loc);
+                for(let i = 0; i < loc.deviceId.length; i++) {
+                    console.log(loc[i]);
+                    if(loc[i].deviceId === deviceId) {
+                        loc.deviceId.splice(i, 1);
+                        return ProjectLocation.update(loc)
+                            .then(result => result)
+                    }
+                }
+            })
+            .then(() => {
+                device.locationId = '';
+                Device.findByIdAndUpdate(device._id, device)
+                    .then(next => {
+                        callback(
+                            standardResponse(200, {
+                                device: next,
+                                message: 'detached device from location'
+                            })
+                        )
+                    })
+                })
+        })
+
 }
