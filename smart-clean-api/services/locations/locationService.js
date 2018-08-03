@@ -1,8 +1,14 @@
+/**
+ * @class Location Service
+ * Service to handle all of the location logic
+ */
 'user strict';
 
 const connectToDatabase = require('../../connect');
 const ProjectLocation = require('../../models/locationModel');
+const standardResponse = require('../utils/apiUtils').standardResponse;
 
+/** No in use */
 module.exports.getLocationsByProjectId = () => {
     // look up location object + get the locationId array
 
@@ -11,6 +17,12 @@ module.exports.getLocationsByProjectId = () => {
     // return locations array
 }
 
+/**
+ * Get Location by the UserId
+ * returns a list of all locations that the user has access to
+ * @param {*} event 
+ * @param {*} callback 
+ */
 module.exports.getLocationByUserId = (event, callback) => {
     const userId = JSON.parse(event.requestContext.authorizer.user).id;
 
@@ -18,17 +30,22 @@ module.exports.getLocationByUserId = (event, callback) => {
         .then(() => {
             ProjectLocation.find({userId: userId})
                 .then(locationList => {
-                    callback({
-                        statusCode: 200,
-                        body: JSON.stringify({
+                    callback(standardResponse(200,
+                        {
                             locationList: locationList,
                             message: 'location list returned'
-                        })
-                    })
+                        }
+                    ))
                 })
         })
 };
 
+/**
+ * Create a new location
+ * Add a new location to the location table
+ * @param {*} event 
+ * @param {*} callback 
+ */
 module.exports.createLocation = (event, callback) => {
     const userId = JSON.parse(event.requestContext.authorizer.user).id;
     const location = JSON.parse(event.body);
@@ -38,17 +55,22 @@ module.exports.createLocation = (event, callback) => {
         .then(() => {
             ProjectLocation.create(location)
                 .then(loc => {
-                    callback({
-                        statusCode: 201,
-                        body: JSON.stringify({
+                    callback(standardResponse(201,
+                        {
                             location: loc,
                             message: 'Successfully added a new Location'
-                        })
-                    })
+                        }
+                    ))
                 })
         })
 };
 
+/**
+ * Update location
+ * requires a location in the body to be used to update the current item in the table
+ * @param {*} event 
+ * @param {*} callback 
+ */
 module.exports.updateLocation = (event, callback) => {
     const location = JSON.parse(event.body);
 
@@ -59,13 +81,12 @@ module.exports.updateLocation = (event, callback) => {
     connectToDatabase()
         .then(() => {
             ProjectLocation.findByIdAndUpdate(location._id, location)
-                .then(loc => callback({
-                    statusCode: 200,
-                    body: JSON.stringify({
+                .then(loc => callback(standardResponse(200,
+                    {                        
                         location: loc,
                         message: 'Successfully updated the location'
-                    })
-                }))
+                    }
+                )))
         })
 
 }

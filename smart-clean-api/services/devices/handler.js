@@ -1,6 +1,16 @@
+/**
+ * @class Device Handler
+ * Handler that maps the device endpoints to the service methods
+ */
 'use strict';
 const deviceService = require('./deviceService');
 
+/**
+ * Get Device By LocationId
+ * @param {*} event 
+ * @param {*} context 
+ * @param {*} callback 
+ */
 module.exports.getDeviceByLocation = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
@@ -15,6 +25,12 @@ module.exports.getDeviceByLocation = (event, context, callback) => {
     }  
 }
 
+/**
+ * Get Device By UserId
+ * @param {*} event 
+ * @param {*} context 
+ * @param {*} callback 
+ */
 module.exports.getDeviceByUser = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
@@ -28,6 +44,13 @@ module.exports.getDeviceByUser = (event, context, callback) => {
     }  
 }
 
+/**
+ * Create Device
+ * requires the device to be sent in the body
+ * @param {*} event 
+ * @param {*} context 
+ * @param {*} callback 
+ */
 module.exports.createDevice = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
@@ -41,6 +64,13 @@ module.exports.createDevice = (event, context, callback) => {
     }  
 }
 
+/**
+ * Update a device already in the database
+ * requires the device to be sent in the body
+ * @param {*} event 
+ * @param {*} context 
+ * @param {*} callback 
+ */
 module.exports.updateDevice = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     try{

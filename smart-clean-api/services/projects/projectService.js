@@ -1,10 +1,15 @@
+/**
+ * @class Project Service
+ */
 'use strict';
 
 const connectToDatabase = require('../../connect');
 const Project = require('../../models/projectModel');
 const ProjectLocation = require('../../models/locationModel');
 const Device = require('../../models/deviceModel');
+const standardResponse = require('../utils/apiUtils').standardResponse;
 
+/** Get Project Location from locationId returns promise */
 const getProjectLocation = (locationId) => {
     return connectToDatabase()
         .then(() => {
@@ -12,6 +17,7 @@ const getProjectLocation = (locationId) => {
         });
 }
 
+/** Get project from its id and returns it as a promise */
 const getProject = (projectId) => {
     return connectToDatabase()
         .then(() => {
@@ -19,6 +25,7 @@ const getProject = (projectId) => {
         })
 }
 
+/** Get device from its id and returns a promise */
 const getDevice = (deviceId) => {
     return connectToDatabase()
         .then(() => {
@@ -26,6 +33,13 @@ const getDevice = (deviceId) => {
         })
 }
 
+/**
+ * Get Complete Project Object
+ * This method works by getting all of the data from the other
+ * tables and agrigates them into one large meta object
+ * that contains all the details this method is async and must be awaited
+ * @param {*} projectId 
+ */
 module.exports.getCompleteProject = async (projectId) => {
     const project = await getProject(projectId);
     const locArr = [];
@@ -50,30 +64,39 @@ module.exports.getCompleteProject = async (projectId) => {
         created: project.created,
         locations: locArr
     };
-    console.log(output);
-    return Promise.resolve({
-        statusCode: 200,
-        body: {
-            project: output,
-            message: 'project built'
-        }
-    });
+
+    return Promise.resolve( standardResponse(200, {
+        project: output,
+        message: 'project built' 
+    }));
 }
 
+/**
+ * Get Projects By User Id
+ * returns a list of all the projects from the userId
+ * @param {*} userId 
+ * @param {*} callback 
+ */
 module.exports.getProjectsByUserId = (userId, callback) =>{
     connectToDatabase()
         .then(() => {
             Project.find({userId: userId})
-                .then(projectList => callback({
-                    statusCode: 200,
-                    body: JSON.stringify({
+                .then(projectList => callback(
+                    standardResponse(200, {
                         projectList: projectList,
-                        message: 'project list returned'
-                    })
-                }))
+                        message: 'project list returned'      
+                    })))
         })
 }
 
+/**
+ * Create a new project
+ * takes a project object in the body and completes it and saves into the
+ * data
+ * @param {*} event 
+ * @param {*} userId 
+ * @param {*} callback 
+ */
 module.exports.createProject = (event, userId ,callback) => {
     const project = JSON.parse(event.body);
     project.userId = [userId];
@@ -81,17 +104,20 @@ module.exports.createProject = (event, userId ,callback) => {
         .then(() => {
             Project.create(project)
             .then(p => {
-                callback({
-                    statusCode: 201,
-                    body: JSON.stringify({
-                        project: p,
-                        message: 'Successfully created new project'
-                    })
-                })
+                callback(standardResponse(200, {
+                    project: p,
+                    message: 'Successfully created new project'
+                }))
             })
         });
 };
 
+/**
+ * Update project
+ * uses an object from the body and finds it in the database before updating it
+ * @param {*} event 
+ * @param {*} callback 
+ */
 module.exports.updateProject = (event, callback) => {
     const project = JSON.parse(event.body);
 
@@ -103,13 +129,11 @@ module.exports.updateProject = (event, callback) => {
         .then(() => {
             Project.findByIdAndUpdate(project._id, project)
                 .then(project => {
-                    callback({
-                        statusCode: 200,
-                        body: JSON.stringify({
+                    callback(
+                        standardResponse(200, {
                             project: project,
-                            message: 'Successfully updated project: ' + project.display_name
-                        })
-                    })   
+                            message: 'Successfully updated project: ' + project.display_name    
+                        }))   
                 })
         })
 

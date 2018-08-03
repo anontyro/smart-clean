@@ -1,6 +1,15 @@
+/**
+ * @class Location Handler
+ */
 'use strict';
 const locationService = require('./locationService');
 
+/**
+ * Not In Use
+ * @param {*} event 
+ * @param {*} context 
+ * @param {*} callback 
+ */
 module.exports.getLocationsByProjectId = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
@@ -14,9 +23,14 @@ module.exports.getLocationsByProjectId = (event, context, callback) => {
         console.log(ex);
         callback(null, ex);
     }   
-
 }
 
+/**
+ * Get a list of all locations by the userId
+ * @param {*} event 
+ * @param {*} context 
+ * @param {*} callback 
+ */
 module.exports.getLocationByUser = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
@@ -31,6 +45,12 @@ module.exports.getLocationByUser = (event, context, callback) => {
 
 }
 
+/**
+ * Create a new location object
+ * @param {*} event 
+ * @param {*} context 
+ * @param {*} callback 
+ */
 module.exports.createLocation = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
@@ -45,6 +65,12 @@ module.exports.createLocation = (event, context, callback) => {
 
 }
 
+/**
+ * Update the location in the database
+ * @param {*} event 
+ * @param {*} context 
+ * @param {*} callback 
+ */
 module.exports.updateLocation = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
@@ -59,6 +85,7 @@ module.exports.updateLocation = (event, context, callback) => {
 
 }
 
+/** Not Implemented */
 module.exports.deleteLocation = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
