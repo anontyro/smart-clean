@@ -56,7 +56,7 @@ export class DeviceFormComponent implements OnInit {
     this.apiService.detachDevice(this.device)
       .subscribe(response => {
         console.log(response);
-        this.onSuccess();
+        this.apiService.getLocationList(true).subscribe(this.onSuccess());
       }, err => {
         this.isLoading = false;
         console.error(err);

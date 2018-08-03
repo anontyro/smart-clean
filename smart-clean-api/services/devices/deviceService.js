@@ -92,20 +92,20 @@ module.exports.updateDevice = (event, callback) => {
         })
 }
 
-const detachLocation = (locationId, deviceId) => {
-    return ProjectLocation.findById(locationId)
-        .then(loc => {
-            console.log(locationId);
-            for(let i = 0; i < loc.deviceId.length; i++) {
-                console.log(loc[i]);
-                if(loc[i].deviceId === deviceId) {
-                    loc.deviceId.splice(i, 1);
-                    return ProjectLocation.update(loc)
-                        .then(result => result)
-                }
-            }
-        })
-}
+// const detachLocation = (locationId, deviceId) => {
+//     return ProjectLocation.findById(locationId)
+//         .then(loc => {
+//             console.log(locationId);
+//             for(let i = 0; i < loc.deviceId.length; i++) {
+//                 console.log(loc[i]);
+//                 if(loc[i].deviceId === deviceId) {
+//                     loc.deviceId.splice(i, 1);
+//                     return ProjectLocation.update(loc)
+//                         .then(result => result)
+//                 }
+//             }
+//         })
+// }
 
 module.exports.detachDevice = (event, callback) => {
     const device = JSON.parse(event.body);
@@ -113,13 +113,14 @@ module.exports.detachDevice = (event, callback) => {
         .then(() => {
             ProjectLocation.findById(device.locationId)
             .then(loc => {
-                console.log(loc);
                 for(let i = 0; i < loc.deviceId.length; i++) {
-                    console.log(loc[i]);
-                    if(loc[i].deviceId === deviceId) {
+                    if(loc.deviceId[i]=== device._id) {
                         loc.deviceId.splice(i, 1);
-                        return ProjectLocation.update(loc)
-                            .then(result => result)
+                        console.log(loc);
+                        return ProjectLocation.findByIdAndUpdate(loc._id, loc)
+                            .then(result => {
+                                console.log(result)
+                            })
                     }
                 }
             })
