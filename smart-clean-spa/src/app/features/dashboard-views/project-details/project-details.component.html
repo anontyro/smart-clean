@@ -1,3 +1,14 @@
-<p>
-  project-details works!
-</p>
+<div class="project-detail-container" *ngIf="project">
+  <div class="header">
+    <h3>{{project.display_name.toUpperCase()}} ({{project.pid}})</h3>
+    <p>{{project.created}}</p>
+  </div>
+
+  <div class="project-body">
+    <div class="project-location" *ngFor="let loc of project.locations">
+      <p>{{loc.display_name}}</p>
+      <app-device-list [deviceList]="loc.devices"></app-device-list>
+    </div>
+  </div>
+
+</div>
