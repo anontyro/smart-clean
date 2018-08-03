@@ -1,0 +1,15 @@
+
+.device-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.remove-dev:hover{
+    color: gray;
+    cursor: pointer;
+}
+
+.list-of-devices{
+    min-height: 50px;
+}

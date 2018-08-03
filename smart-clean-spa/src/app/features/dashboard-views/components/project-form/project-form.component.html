@@ -1,3 +1,43 @@
-<p>
-  project-form works!
-</p>
+<div class="main-form">
+  <form #pForm="ngForm"  novalidate>
+
+    <div class="form-row">
+      <div class="form-group">
+        <input type="text" class="form-control" name="displayName" [(ngModel)]="project.display_name"  
+        placeholder="Display Name" #displayName="ngModel" required>
+        <div class="invalid-feedback" *ngIf="displayName.errors && (displayName.dirty || displayName.touched)">
+          <p *ngIf="displayName.errors.required">A display name is required</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" name="pid" [(ngModel)]="project.pid"  
+        placeholder="Project Identifier" #pid="ngModel" required>
+        <div class="invalid-feedback" *ngIf="pid.errors && (pid.dirty || pid.touched)">
+          <p *ngIf="pid.errors.required">a Project identifier is required</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="location">
+      <label>Location</label>
+      <div class="input-group">
+        <select class="form-control" name="location" [(ngModel)]="selectedLocation">
+          <option *ngFor="let loc of locationList" [value]="loc._id" >{{loc.display_name}}</option>
+        </select>
+        <div class="input-group-append">
+          <button  class="btn btn-outline-secondary" type="add-btn" (click)="addLocation()" >Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-of-locations">
+      <div class="location-item" *ngFor="let l of project?.locationId">
+        {{l}}
+        <div class="remove-loc" (click)="removeLocation(l)">Remove</div>
+      </div>
+    </div>
+
+    <button type="submit" name="submit-form" class="btn btn-dark btn-lg btn-block" (click)="onSubmit(pForm)" >Submit</button>
+  </form>
+</div>

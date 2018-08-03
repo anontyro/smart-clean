@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ApiHandlerService } from './../../../../core/services/api/api-handler.service';
+import { LoginHandlerService } from './../../../../core/services/auth/login-handler.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { DeviceModel } from '../../../../../models/database/device.model';
+import { Router } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-device-form',
@@ -7,9 +12,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeviceFormComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  public device: DeviceModel;
+
+  public isLoading = false;
+
+  constructor(
+    private loginService: LoginHandlerService,
+    private apiService: ApiHandlerService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.deviceExists();
+  }
+
+  private deviceExists() {
+    if (this.device) {
+      return;
+    }
+    const dev: DeviceModel = {
+      id: '',
+      deviceType: '',
+      locationId: '',
+      display_name: '',
+    };
+    this.device = dev;
+  }
+
+  public onSubmit(form: NgForm) {
+    if (form.invalid) {
+      return this.loginService.setFormFieldErrors(form);
+    }
+    this.isLoading = true;
+    this.createDevice();
+  }
+
+  private createDevice() {
+    this.apiService.postNewDeviceList(this.device)
+      .subscribe(response => {
+        console.log(response);
+        this.apiService.getDeviceList(true).subscribe(this.onSuccess());
+      }, err => {
+        this.isLoading = false;
+        console.error(err);
+      });
+  }
+
+  private onSuccess() {
+    this.device = undefined;
+    this.router.navigate(['/']);
   }
 
 }

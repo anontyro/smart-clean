@@ -1,3 +1,43 @@
-<p>
-  location-form works!
-</p>
+<div class="main-form">
+    <form #lForm="ngForm" novalidate>
+  
+      <div class="form-row">
+        <div class="form-group">
+          <input type="text" class="form-control" name="displayName" [(ngModel)]="location.display_name"  
+          placeholder="Display Name" #displayName="ngModel" required>
+          <div class="invalid-feedback" *ngIf="displayName.errors && (displayName.dirty || displayName.touched)">
+            <p *ngIf="displayName.errors.required">A display name is required</p>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <input type="text" class="form-control" name="locId" [(ngModel)]="location.id"  
+          placeholder="Location Identifier" #locId="ngModel" required>
+          <div class="invalid-feedback" *ngIf="locId.errors && (locId.dirty || locId.touched)">
+            <p *ngIf="locId.errors.required">a location id identifier is required</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="device">
+        <label>Avaliable Devices</label>
+        <div class="input-group">
+          <select class="form-control" name="device" [(ngModel)]="selectedDevice">
+            <option *ngFor="let dev of avaliableDevices()" [value]="dev._id" >{{dev.display_name}}</option>
+          </select>
+          <div class="input-group-append">
+            <button  class="btn btn-outline-secondary" type="add-btn" (click)="addDevice()" >Add</button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="list-of-devices">
+        <div class="device-item" *ngFor="let d of location?.deviceId">
+          {{d}}
+          <div class="remove-dev" (click)="removeDevice(d)">Remove</div>
+        </div>
+      </div>
+  
+      <button type="submit" name="submit-form" class="btn btn-dark btn-lg btn-block" (click)="onSubmit(lForm)">Submit</button>
+    </form>
+  </div>

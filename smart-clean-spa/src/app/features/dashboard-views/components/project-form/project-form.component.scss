@@ -1,0 +1,15 @@
+
+.location-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.remove-loc:hover{
+    color: gray;
+    cursor: pointer;
+}
+
+.list-of-locations{
+    min-height: 50px;
+}

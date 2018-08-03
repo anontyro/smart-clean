@@ -1,3 +1,35 @@
-<p>
-  device-form works!
-</p>
+<div class="main-form">
+  <form #dForm="ngForm" novalidate>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <input type="text" class="form-control" name="displayName" [(ngModel)]="device.display_name"  
+        placeholder="Display Name" #displayName="ngModel" required>
+        <div class="invalid-feedback" *ngIf="displayName.errors && (displayName.dirty || displayName.touched)">
+          <p *ngIf="displayName.errors.required">A display name is required</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" name="devType" [(ngModel)]="device.deviceType"  
+        placeholder="Device Type" #devType="ngModel" required>
+        <div class="invalid-feedback" *ngIf="devType.errors && (devType.dirty || devType.touched)">
+          <p *ngIf="devType.errors.required">A device type is required</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" name="devId" [(ngModel)]="device.id"  
+        placeholder="Device identifier" #devId="ngModel" required>
+        <div class="invalid-feedback" *ngIf="devId.errors && (devId.dirty || devId.touched)">
+          <p *ngIf="devId.errors.required">A device identifier is required</p>
+        </div>
+      </div>
+    </div>
+
+    
+
+
+    <button type="submit" name="submit-form" class="btn btn-dark btn-lg btn-block" (click)="onSubmit(dForm)">Submit</button>
+  </form>
+</div>
